@@ -4,3 +4,4 @@ export { default as Homepage } from "./Homepage";
 export { default as CryptoDetails } from "./CryptoDetails";
 export { default as News } from "./News";
 export { default as Trade } from "./Trade";
+export { default as Loader } from "./Loader";
