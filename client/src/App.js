@@ -12,6 +12,16 @@ import {
 } from "./components";
 import "./App.css";
 
+//routing
+import PrivateRoute from "./components/routing/PrivateRoute";
+
+//screens
+import PrivateScreen from "./components/screens/PrivateScreen";
+import LoginScreen from "./components/screens/LoginScreen";
+import RegisterScreen from "./components/screens/RegisterScreen";
+import ForgotPasswordScreen from "./components/screens/ForgotPasswordScreen";
+import ResetPasswordScreen from "./components/screens/ResetPasswordScreen";
+
 const App = () => {
   return (
     <div className="app">
@@ -36,9 +46,24 @@ const App = () => {
                 element={<CryptoDetails />}
               ></Route>
 
-              <Route exact path="/trade" element={<Trade />}></Route>
-
               <Route exact path="/news" element={<News />}></Route>
+
+              <Route exact path="/trade" element={<PrivateRoute />}>
+                <Route exact path="/trade" element={<PrivateScreen />} />
+              </Route>
+
+              <Route exact path="/login" element={<LoginScreen />} />
+              <Route exact path="/register" element={<RegisterScreen />} />
+              <Route
+                exact
+                path="/forgotpassword"
+                element={<ForgotPasswordScreen />}
+              />
+              <Route
+                exact
+                path="/passwordreset/:resetToken"
+                element={<ResetPasswordScreen />}
+              />
             </Switch>
           </div>
         </Layout>
