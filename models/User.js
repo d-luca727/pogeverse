@@ -2,10 +2,12 @@ const crypto = require("crypto");
 const mongoose = require("mongoose");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
+const { uuid } = require("uuidv4");
 
 const UserSchema = new mongoose.Schema({
   username: {
     type: String,
+    unique: true,
     required: [true, "Please provide a username"],
   },
   email: {
@@ -23,6 +25,18 @@ const UserSchema = new mongoose.Schema({
     minlength: 6,
     select: false, //used to exclude password field from queries
   },
+  money: {
+    type: Number,
+    required: true,
+  },
+  trades: [
+    {
+      coin: String,
+      open: Number,
+      amount: Number,
+      id: String,
+    },
+  ],
   resetPasswordToken: String,
   resetPasswordExpire: Date,
 });

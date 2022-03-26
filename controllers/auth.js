@@ -6,12 +6,14 @@ const sendEmail = require("../utils/sendEmail");
 //register
 exports.register = async (req, res, next) => {
   const { username, email, password } = req.body;
-
+  const money = 1000;
   try {
     const user = await User.create({
       username,
       email,
       password,
+      money,
+      trades: [],
     });
 
     /* res.status(201).json({ success: true, token: "proiva" }); */
