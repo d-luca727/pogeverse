@@ -4,6 +4,8 @@ import axios from "axios";
 import "../../styles/PrivateScreen.css";
 import "../../styles/style.css";
 
+import Trade from "../trading/Trade";
+
 const PrivateScreen = () => {
   const [error, setError] = useState("");
   const [privateData, setPrivateData] = useState("");
@@ -39,7 +41,9 @@ const PrivateScreen = () => {
     <span className="error-message">{error}</span>
   ) : (
     <>
-      <div>{privateData}</div>
+      <div>
+        <Trade />
+      </div>
       <button onClick={logoutHandler}>Logout</button>
     </>
   );

@@ -12,6 +12,9 @@ import {
 } from "./components";
 import "./App.css";
 
+//trading
+import CryptoTrading from "./components/trading/CryptoTrading";
+
 //routing
 import PrivateRoute from "./components/routing/PrivateRoute";
 
@@ -45,9 +48,15 @@ const App = () => {
                 path="/crypto/:coinId"
                 element={<CryptoDetails />}
               ></Route>
+              <Route
+                exact
+                path="/crypto-trading/:coinId"
+                element={<CryptoTrading />}
+              ></Route>
 
               <Route exact path="/news" element={<News />}></Route>
 
+              {/* fix the flashing screen before showing the login page */}
               <Route exact path="/trade" element={<PrivateRoute />}>
                 <Route exact path="/trade" element={<PrivateScreen />} />
               </Route>

@@ -1,8 +1,8 @@
-import React, { useState } from "react";
+import React from "react";
 import HTMLReactParser from "html-react-parser";
 import { useParams } from "react-router-dom";
 import millify from "millify";
-import { Col, Row, Typography, Select } from "antd";
+import { Col, Row, Typography, Select, InputNumber, Button } from "antd";
 import {
   MoneyCollectOutlined,
   DollarCircleOutlined,
@@ -18,14 +18,14 @@ import {
 import {
   useGetCryptoDetailsQuery,
   useGetCryptoHistoryQuery,
-} from "../services/crypto-api";
-import TradingChart from "./trading/TradingChart";
-import Loader from "./Loader";
+} from "../../services/crypto-api";
+import TradingChart from "./TradingChart";
+import Loader from "../Loader";
 
 const { Title, Text } = Typography;
 const { Option } = Select;
 
-const CryptoDetails = () => {
+const CryptoTrading = () => {
   const { coinId } = useParams();
   const { data, isFetching } = useGetCryptoDetailsQuery(coinId);
   /* const { data: coinHistory } = useGetCryptoHistoryQuery({coinId, timePeriod }); */
@@ -124,6 +124,68 @@ const CryptoDetails = () => {
       </Title>
       <TradingChart symbol={data?.data?.coin.symbol} />
 
+      {/* trading stuff */}
+      <Title className="coin-heading-container" level={3}>
+        Trade
+      </Title>
+      <Row gutter={[24, 16]}>
+        <Col span={12}>
+          <Col className="coin-stats">
+            <Col className="coin-stats-name">
+              <Text>
+                <DollarCircleOutlined />
+              </Text>
+              <Text>buy at Price(USD)</Text>
+            </Col>
+            <Text className="stats">
+              ${cryptoDetails?.price.toString().slice(0, 8)}
+            </Text>
+          </Col>
+        </Col>
+        <Col span={12}>
+          <Col className="coin-stats">
+            <Col className="coin-stats-name">
+              <Text>
+                <DollarCircleOutlined />
+              </Text>
+              <Text>sell at Price(USD)</Text>
+            </Col>
+            <Text className="stats">
+              ${cryptoDetails?.price.toString().slice(0, 8)}
+            </Text>
+          </Col>
+        </Col>
+
+        <Col span={12}>
+          <Col className="coin-stats">
+            <Col className="coin-stats-name">
+              <Text>
+                <FundOutlined />
+              </Text>
+              <Text>Amount to Buy</Text>
+            </Col>
+            <Col className="stats">
+              <InputNumber />
+              <Button>Buy</Button>
+            </Col>
+          </Col>
+        </Col>
+
+        <Col span={12}>
+          <Col className="coin-stats">
+            <Col className="coin-stats-name">
+              <Text>
+                <FundOutlined />
+              </Text>
+              <Text>Amount to Sell</Text>
+            </Col>
+            <Col className="stats">
+              <InputNumber />
+              <Button>Sell</Button>
+            </Col>
+          </Col>
+        </Col>
+      </Row>
       <Col className="stats-container">
         <Col className="coin-value-statistics">
           <Col className="coin-value-statistics-heading">
@@ -193,4 +255,4 @@ const CryptoDetails = () => {
   );
 };
 
-export default CryptoDetails;
+export default CryptoTrading;
