@@ -23,8 +23,6 @@ const Trade = ({ simplified }) => {
     setCryptos(filteredData);
   }, [cryptoList, searchTerm]);
 
-  console.log(cryptoList);
-
   if (isFetching) {
     return <Loader />;
   }
@@ -59,7 +57,6 @@ const Trade = ({ simplified }) => {
               >
                 <p>Price: {millify(currency.price)}$</p>
                 <p>Market Cap: {millify(currency.marketCap)}</p>
-                {console.log(currency)}
 
                 <p>
                   Change:{" "}

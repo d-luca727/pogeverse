@@ -4,7 +4,13 @@ import { Link, useNavigate } from "react-router-dom";
 import "../../styles/RegisterScreen.css";
 import "../../styles/style.css";
 
+import { useSelector, useDispatch } from "react-redux";
+import { atLogin } from "../../app/profileReducer";
+
 const RegisterScreen = () => {
+  const profile = useSelector((state) => state.profile);
+  const dispatch = useDispatch();
+
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -42,6 +48,8 @@ const RegisterScreen = () => {
       );
 
       localStorage.setItem("authToken", data.token);
+
+      dispatch(atLogin(data.user));
 
       navigate("/trade");
     } catch (error) {

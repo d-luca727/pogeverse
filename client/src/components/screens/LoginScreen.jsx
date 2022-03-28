@@ -4,7 +4,13 @@ import { Link, useNavigate } from "react-router-dom";
 import "../../styles/LoginScreen.css";
 import "../../styles/style.css";
 
+import { useSelector, useDispatch } from "react-redux";
+import { atLogin } from "../../app/profileReducer";
+
 const LoginScreen = (props) => {
+  const profile = useSelector((state) => state.profile);
+  const dispatch = useDispatch();
+
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
@@ -26,15 +32,16 @@ const LoginScreen = (props) => {
     };
 
     try {
-      const { data } = await axios.post(
-        "/api/auth/login",
-        { email, password },
-        config
-      );
+      await axios
+        .post("/api/auth/login", { email, password }, config)
+        .then((res) => {
+          localStorage.setItem("authToken", res.data.token);
 
-      localStorage.setItem("authToken", data.token);
+          dispatch(atLogin(res.data.user));
+          console.log(res.data.user);
 
-      navigate("/trade");
+          navigate("/trade");
+        });
     } catch (error) {
       console.log(error);
       setError(error.response.data.error);

@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { Button } from "antd";
 import axios from "axios";
 import "../../styles/PrivateScreen.css";
 import "../../styles/style.css";
@@ -26,7 +27,6 @@ const PrivateScreen = () => {
       } catch (error) {
         localStorage.removeItem("authToken");
         setError("You are not authorized please login");
-        //todo: mettere un bottone che ti fa tornare a /login
       }
     };
 
@@ -38,13 +38,17 @@ const PrivateScreen = () => {
     navigate("/login");
   };
   return error ? (
-    <span className="error-message">{error}</span>
+    <>
+      <span className="error-message">{error}</span>
+      <div className="btn-login">
+        <Button onClick={() => navigate("/login")}>Login</Button>
+      </div>
+    </>
   ) : (
     <>
       <div>
         <Trade />
       </div>
-      <button onClick={logoutHandler}>Logout</button>
     </>
   );
 };

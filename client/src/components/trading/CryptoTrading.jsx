@@ -99,8 +99,6 @@ const CryptoTrading = () => {
     },
   ];
 
-  /*   console.log(coinHistory) */
-
   if (isFetching) return <Loader />;
 
   return (

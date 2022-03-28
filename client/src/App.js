@@ -4,12 +4,13 @@ import { Layout, Typography, Space } from "antd";
 
 import {
   Navbar,
-  Trade,
   Homepage,
   Cryptos,
   News,
+  Profile,
   CryptoDetails,
 } from "./components";
+
 import "./App.css";
 
 //trading
@@ -18,7 +19,7 @@ import CryptoTrading from "./components/trading/CryptoTrading";
 //routing
 import PrivateRoute from "./components/routing/PrivateRoute";
 
-//screens
+//login stuff
 import PrivateScreen from "./components/screens/PrivateScreen";
 import LoginScreen from "./components/screens/LoginScreen";
 import RegisterScreen from "./components/screens/RegisterScreen";
@@ -48,17 +49,26 @@ const App = () => {
                 path="/crypto/:coinId"
                 element={<CryptoDetails />}
               ></Route>
-              <Route
-                exact
-                path="/crypto-trading/:coinId"
-                element={<CryptoTrading />}
-              ></Route>
+
+              <Route exact path="/profile" element={<Profile />}></Route>
 
               <Route exact path="/news" element={<News />}></Route>
-
+              {/************ PRIVATE ROUTES  ****************/}
               {/* fix the flashing screen before showing the login page */}
               <Route exact path="/trade" element={<PrivateRoute />}>
                 <Route exact path="/trade" element={<PrivateScreen />} />
+              </Route>
+
+              <Route
+                exact
+                path="/crypto-trading/:coinId"
+                element={<PrivateRoute />}
+              >
+                <Route
+                  exact
+                  path="/crypto-trading/:coinId"
+                  element={<CryptoTrading />}
+                ></Route>
               </Route>
 
               <Route exact path="/login" element={<LoginScreen />} />
