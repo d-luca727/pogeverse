@@ -99,8 +99,6 @@ const CryptoDetails = () => {
     },
   ];
 
-  /*   console.log(coinHistory) */
-
   if (isFetching) return <Loader />;
 
   return (

@@ -38,12 +38,10 @@ const LoginScreen = (props) => {
           localStorage.setItem("authToken", res.data.token);
 
           dispatch(atLogin(res.data.user));
-          console.log(res.data.user);
 
           navigate("/trade");
         });
     } catch (error) {
-      console.log(error);
       setError(error.response.data.error);
       setTimeout(() => {
         setError("");

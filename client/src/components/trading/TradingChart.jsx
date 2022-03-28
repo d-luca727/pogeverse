@@ -5,11 +5,7 @@ const TradingChart = ({ symbol }) => {
   const tradingRef = useRef(null);
   const [symbolState, setSymbolState] = useState(symbol);
 
-  useEffect(() => {
-    console.log(tradingRef.current.props.symbol);
-  }, []);
-
-  console.log(symbol);
+  useEffect(() => {}, []);
 
   return (
     <TradingViewWidget
