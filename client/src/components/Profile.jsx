@@ -11,6 +11,9 @@ import Loader from "./Loader";
 
 import { DollarCircleOutlined } from "@ant-design/icons";
 
+import { useSelector, useDispatch } from "react-redux";
+import { atLogin } from "../app/profileReducer";
+
 const { Title, Text } = Typography;
 
 const Profile = () => {
@@ -19,11 +22,13 @@ const Profile = () => {
 
   const { profile } = store.getState();
 
+  const __profile = useSelector((state) => state.profile);
+  const dispatch = useDispatch();
+
   const { data: cryptoList, isFetching } = useGetCryptosQuery(100);
   const [cryptos, setCryptos] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
-
-  let currency;
+  const [isCryptoQuery, setCryptoQuery] = useState(false);
 
   useEffect(() => {
     setCryptos(cryptoList?.data?.coins);
@@ -33,8 +38,10 @@ const Profile = () => {
     );
 
     setCryptos(filteredData);
+    setCryptoQuery(true);
   }, [cryptoList, searchTerm]);
 
+  //maybe make a validate function later
   useEffect(() => {
     const fetchPrivateDate = async () => {
       const config = {
@@ -45,7 +52,9 @@ const Profile = () => {
       };
 
       try {
-        await axios.get("/api/private", config);
+        const { data } = await axios.get("/api/private", config);
+
+        dispatch(atLogin(data.data));
       } catch (error) {
         localStorage.removeItem("authToken");
         setError("You are not authorized please login");
@@ -53,8 +62,10 @@ const Profile = () => {
     };
 
     fetchPrivateDate();
-  }, []);
-  if (isFetching) return <Loader />;
+  }, [profile]);
+
+  if (!localStorage.getItem("authToken")) navigate("/login");
+  if (isFetching || !isCryptoQuery) return <Loader />;
 
   return error ? (
     <>
@@ -78,13 +89,13 @@ const Profile = () => {
         <Col span={12}>
           <Statistic
             title="Total Amount of Money:"
-            value={`$ ${profile.money}`}
+            value={`$ ${profile?.money}`}
           />
         </Col>
         <Col span={12}>
           <Statistic
             title="Number of open positions:"
-            value={profile.trades.length}
+            value={profile?.trades.length}
           />
         </Col>
       </Row>
@@ -93,7 +104,7 @@ const Profile = () => {
         Open Positions
       </Title>
 
-      {profile.trades.map(({ coin, open, amount }, index) => (
+      {profile?.trades.map(({ coin, open, amount }, index) => (
         <>
           <Row>
             <Col span={14} key={index} className="coin-stats">
@@ -113,7 +124,7 @@ const Profile = () => {
                 <Statistic
                   title={"profit/loss"}
                   value={
-                    (cryptos.find((crypto) => crypto.symbol == coin).price /
+                    (cryptos?.find((crypto) => crypto.symbol == coin).price /
                       open) *
                     amount
                   }

@@ -26,7 +26,6 @@ exports.openTrade = async (req, res, next) => {
     user.trades = trades;
 
     await user.save();
-    console.log("ciao");
     res.status(200).json({ success: true, data: unique_id });
   } catch (error) {
     return next(

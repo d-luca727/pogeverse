@@ -1,8 +1,19 @@
-import React from "react";
+import React, { useState } from "react";
+import axios from "axios";
+import store from "../../app/store";
 import HTMLReactParser from "html-react-parser";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import millify from "millify";
-import { Col, Row, Typography, Select, InputNumber, Button } from "antd";
+
+import {
+  Col,
+  Row,
+  Typography,
+  Select,
+  InputNumber,
+  Button,
+  notification,
+} from "antd";
 import {
   MoneyCollectOutlined,
   DollarCircleOutlined,
@@ -12,13 +23,11 @@ import {
   TrophyOutlined,
   CheckOutlined,
   NumberOutlined,
+  FrownOutlined,
   ThunderboltOutlined,
 } from "@ant-design/icons";
 
-import {
-  useGetCryptoDetailsQuery,
-  useGetCryptoHistoryQuery,
-} from "../../services/crypto-api";
+import { useGetCryptoDetailsQuery } from "../../services/crypto-api";
 import TradingChart from "./TradingChart";
 import Loader from "../Loader";
 
@@ -28,10 +37,13 @@ const { Option } = Select;
 const CryptoTrading = () => {
   const { coinId } = useParams();
   const { data, isFetching } = useGetCryptoDetailsQuery(coinId);
-  /* const { data: coinHistory } = useGetCryptoHistoryQuery({coinId, timePeriod }); */
-  const cryptoDetails = data?.data?.coin;
+  const { profile } = store.getState();
 
-  /*  const time = ['3h', '24h', '7d', '30d', '1y', '3m', '3y', '5y']; */
+  const [buyAmount, setBuyAmount] = useState(0);
+
+  const navigate = useNavigate();
+
+  const cryptoDetails = data?.data?.coin;
 
   const stats = [
     {
@@ -99,6 +111,45 @@ const CryptoTrading = () => {
     },
   ];
 
+  const openPosition = (e) => {
+    e.preventDefault();
+    const fetchPrivateDate = async () => {
+      const config = {
+        headers: {
+          "Content-Type": "application/json",
+          /*  Authorization: `Bearer ${localStorage.getItem("authToken")}`, */
+        },
+      };
+
+      try {
+        await axios.put(
+          "/api/trade/open",
+          {
+            username: profile.username,
+            coin: cryptoDetails.symbol,
+            money_invested: buyAmount,
+            open_price: cryptoDetails.price,
+          },
+          config
+        );
+
+        notification.open({
+          message: "Trade has been successful",
+          description: `You invested $${buyAmount} in ${cryptoDetails.symbol}. `,
+        });
+      } catch (error) {
+        console.log(error);
+        notification.open({
+          message: "An error has occured",
+          description: `Check if you have exceeded the maximum amount of funds available. `,
+          icon: <FrownOutlined />,
+        });
+      }
+    };
+
+    fetchPrivateDate();
+  };
+
   if (isFetching) return <Loader />;
 
   return (
@@ -112,10 +163,6 @@ const CryptoTrading = () => {
           statistics, market cap and supply.
         </p>
       </Col>
-      {/* <Select defaultValue="7d" className="select-timeperiod" placeholder="Select Timeperiod" onChange={(value) => setTimePeriod(value)}>
-        {time.map((date,index) => <Option key={date}>{date}</Option>)}
-      </Select>  */}
-      {/* <LineChart coinHistory={coinHistory} currentPrice={millify(cryptoDetails?.price)} coinName={cryptoDetails?.name} /> */}
 
       <Title className="coin-heading-container" level={3}>
         TradingView Chart
@@ -163,8 +210,12 @@ const CryptoTrading = () => {
               <Text>Amount to Buy</Text>
             </Col>
             <Col className="stats">
-              <InputNumber />
-              <Button>Buy</Button>
+              <InputNumber
+                min={0}
+                max={profile.money}
+                onChange={(value) => setBuyAmount(value)}
+              />
+              <Button onClick={openPosition}>Buy</Button>
             </Col>
           </Col>
         </Col>
@@ -175,11 +226,12 @@ const CryptoTrading = () => {
               <Text>
                 <FundOutlined />
               </Text>
-              <Text>Amount to Sell</Text>
+              <Text>To close your position go to your wallet:</Text>
             </Col>
             <Col className="stats">
-              <InputNumber />
-              <Button>Sell</Button>
+              <Button onClick={() => navigate("/profile")}>
+                Check your Wallet
+              </Button>
             </Col>
           </Col>
         </Col>

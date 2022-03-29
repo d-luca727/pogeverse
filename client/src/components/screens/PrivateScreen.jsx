@@ -19,6 +19,7 @@ const PrivateScreen = () => {
           "Content-Type": "application/json",
           Authorization: `Bearer ${localStorage.getItem("authToken")}`,
         },
+        body: {},
       };
 
       try {
