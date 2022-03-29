@@ -7,6 +7,7 @@ import { useGetCryptosQuery } from "../../services/crypto-api";
 
 import Loader from "../Loader";
 
+//todo: protect with private data fetching the auth
 const Trade = ({ simplified }) => {
   const count = simplified ? 10 : 100;
   const { data: cryptoList, isFetching } = useGetCryptosQuery(count);

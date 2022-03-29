@@ -2,14 +2,14 @@ import store from "../app/store";
 
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { Button, Col, Row, Statistic, Typography, InputNumber } from "antd";
+import { Button, Col, Row, Statistic, Typography, notification } from "antd";
 import { useNavigate } from "react-router-dom";
 
 import { useGetCryptosQuery } from "../services/crypto-api";
 
 import Loader from "./Loader";
 
-import { DollarCircleOutlined } from "@ant-design/icons";
+import { DollarCircleOutlined, FrownOutlined } from "@ant-design/icons";
 
 import { useSelector, useDispatch } from "react-redux";
 import { atLogin } from "../app/profileReducer";
@@ -20,7 +20,7 @@ const Profile = () => {
   const [error, setError] = useState("");
   const navigate = useNavigate();
 
-  const { profile } = store.getState();
+  let { profile } = store.getState();
 
   const __profile = useSelector((state) => state.profile);
   const dispatch = useDispatch();
@@ -41,6 +41,7 @@ const Profile = () => {
     setCryptoQuery(true);
   }, [cryptoList, searchTerm]);
 
+  useEffect(() => {}, [profile]);
   //maybe make a validate function later
   useEffect(() => {
     const fetchPrivateDate = async () => {
@@ -58,11 +59,47 @@ const Profile = () => {
       } catch (error) {
         localStorage.removeItem("authToken");
         setError("You are not authorized please login");
+        console.log(error + "non autorazizinalbe");
       }
     };
 
     fetchPrivateDate();
   }, [profile]);
+
+  const closePosition = async (index) => {
+    console.log(profile);
+    const config = {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${localStorage.getItem("authToken")}`,
+      },
+    };
+
+    try {
+      await axios.put(
+        "/api/trade/close",
+        {
+          username: profile.username,
+          trade_id: profile.trades[index].id,
+          coin_amount_now: cryptos?.find(
+            (crypto) => crypto.symbol == profile.trades[index].coin
+          ).price,
+        },
+        config
+      );
+
+      notification.open({
+        message: "Trade has been closed successfully",
+      });
+    } catch (error) {
+      console.log(error);
+      notification.open({
+        message: "An error has occured",
+
+        icon: <FrownOutlined />,
+      });
+    }
+  };
 
   if (!localStorage.getItem("authToken")) navigate("/login");
   if (isFetching || !isCryptoQuery) return <Loader />;
@@ -103,7 +140,13 @@ const Profile = () => {
       <Title className="title-positions" level={2}>
         Open Positions
       </Title>
-
+      {profile?.trades.length == 0 && (
+        <>
+          <Title level={4}>
+            You haven't opened any position yet. Go to Trade and start trading!
+          </Title>
+        </>
+      )}
       {profile?.trades.map(({ coin, open, amount }, index) => (
         <>
           <Row>
@@ -131,14 +174,9 @@ const Profile = () => {
                 />
               </Text>
 
-              <InputNumber
-                defaultValue={100}
-                min={0}
-                max={100}
-                formatter={(value) => `${value}%`}
-                parser={(value) => value.replace("%", "")}
-              />
-              <Button>Sell</Button>
+              <Button onClick={() => closePosition(index)}>
+                Close Position
+              </Button>
             </Col>
           </Row>
           <br />

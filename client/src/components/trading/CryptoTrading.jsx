@@ -111,13 +111,13 @@ const CryptoTrading = () => {
     },
   ];
 
+  //todo:insert fetchprivate data and add it to the store (user object)
   const openPosition = (e) => {
-    e.preventDefault();
     const fetchPrivateDate = async () => {
       const config = {
         headers: {
           "Content-Type": "application/json",
-          /*  Authorization: `Bearer ${localStorage.getItem("authToken")}`, */
+          Authorization: `Bearer ${localStorage.getItem("authToken")}`,
         },
       };
 

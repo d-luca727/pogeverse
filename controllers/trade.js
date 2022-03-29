@@ -53,7 +53,7 @@ exports.closeTrade = async (req, res, next) => {
     user.money = user.money + profit;
 
     await user.save();
-    res.status(200).json({ success: true, data: `Trade successfully closed!` });
+    res.status(200).json({ success: true, data: user });
   } catch (error) {
     return next(
       new ErrorResponse("Server did not succeed at closing the position!", 500)
