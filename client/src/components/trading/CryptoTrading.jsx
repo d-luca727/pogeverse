@@ -1,4 +1,6 @@
 import React, { useState } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { atLogin } from "../../app/profileReducer";
 import axios from "axios";
 import store from "../../app/store";
 import HTMLReactParser from "html-react-parser";
@@ -37,7 +39,10 @@ const { Option } = Select;
 const CryptoTrading = () => {
   const { coinId } = useParams();
   const { data, isFetching } = useGetCryptoDetailsQuery(coinId);
+
   const { profile } = store.getState();
+  const __profile = useSelector((state) => state.profile);
+  const dispatch = useDispatch();
 
   const [buyAmount, setBuyAmount] = useState(0);
 
@@ -111,7 +116,7 @@ const CryptoTrading = () => {
     },
   ];
 
-  //todo:insert fetchprivate data and add it to the store (user object)
+  //onClick openPosition
   const openPosition = (e) => {
     const fetchPrivateDate = async () => {
       const config = {
@@ -122,7 +127,7 @@ const CryptoTrading = () => {
       };
 
       try {
-        await axios.put(
+        const { data } = await axios.put(
           "/api/trade/open",
           {
             username: profile.username,
@@ -132,6 +137,7 @@ const CryptoTrading = () => {
           },
           config
         );
+        dispatch(atLogin(data.user));
 
         notification.open({
           message: "Trade has been successful",

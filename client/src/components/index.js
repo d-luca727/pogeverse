@@ -6,3 +6,4 @@ export { default as News } from "./News";
 export { default as Trade } from "./trading/Trade";
 export { default as Loader } from "./Loader";
 export { default as Profile } from "./Profile";
+export { default as About } from "./About";

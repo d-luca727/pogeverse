@@ -10,7 +10,7 @@ import {
   Profile,
   CryptoDetails,
 } from "./components";
-
+import About from "./components/About";
 import "./App.css";
 
 //trading
@@ -51,6 +51,8 @@ const App = () => {
               ></Route>
 
               <Route exact path="/profile" element={<Profile />}></Route>
+
+              <Route exact path="/about" element={<About />}></Route>
 
               <Route exact path="/news" element={<News />}></Route>
               {/************ PRIVATE ROUTES  ****************/}
@@ -100,6 +102,7 @@ const App = () => {
             <Link to="/Home">Home</Link>
             <Link to="/trade">Trade</Link>
             <Link to="/news">News</Link>
+            <Link to="/about">About Us</Link>
           </Space>
         </div>
       </div>

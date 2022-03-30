@@ -30,6 +30,7 @@ const Profile = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [isCryptoQuery, setCryptoQuery] = useState(false);
 
+  //getting all the cryptos
   useEffect(() => {
     setCryptos(cryptoList?.data?.coins);
 
@@ -41,8 +42,7 @@ const Profile = () => {
     setCryptoQuery(true);
   }, [cryptoList, searchTerm]);
 
-  useEffect(() => {}, [profile]);
-  //maybe make a validate function later
+  //validating auth token
   useEffect(() => {
     const fetchPrivateDate = async () => {
       const config = {
@@ -59,15 +59,14 @@ const Profile = () => {
       } catch (error) {
         localStorage.removeItem("authToken");
         setError("You are not authorized please login");
-        console.log(error + "non autorazizinalbe");
       }
     };
 
     fetchPrivateDate();
-  }, [profile]);
+  }, []);
 
+  //onClick close position
   const closePosition = async (index) => {
-    console.log(profile);
     const config = {
       headers: {
         "Content-Type": "application/json",
@@ -76,7 +75,7 @@ const Profile = () => {
     };
 
     try {
-      await axios.put(
+      const { data } = await axios.put(
         "/api/trade/close",
         {
           username: profile.username,
@@ -87,7 +86,7 @@ const Profile = () => {
         },
         config
       );
-
+      dispatch(atLogin(data.data));
       notification.open({
         message: "Trade has been closed successfully",
       });
@@ -166,11 +165,13 @@ const Profile = () => {
               <Text className={"positions-end"}>
                 <Statistic
                   title={"profit/loss"}
-                  value={
-                    (cryptos?.find((crypto) => crypto.symbol == coin).price /
-                      open) *
-                    amount
-                  }
+                  value={`
+                    $${
+                      (cryptos?.find((crypto) => crypto.symbol == coin).price /
+                        open) *
+                        amount -
+                      amount
+                    }`}
                 />
               </Text>
 

@@ -8,6 +8,7 @@ import {
   FundOutlined,
   MenuOutlined,
   UserOutlined,
+  ReadOutlined,
 } from "@ant-design/icons";
 
 import icon from "../imgs/poge.jpg";
@@ -54,20 +55,24 @@ const Navbar = () => {
             <Link to="/">Home</Link>
           </Menu.Item>
 
-          <Menu.Item icon={<FundOutlined />}>
-            <Link to="/cryptocurrencies">Cryptocurrencies</Link>
+          <Menu.Item icon={<UserOutlined />}>
+            <Link to="/profile">Profile</Link>
           </Menu.Item>
 
           <Menu.Item icon={<MoneyCollectOutlined />}>
             <Link to="/trade">Trade</Link>
           </Menu.Item>
 
-          <Menu.Item icon={<UserOutlined />}>
-            <Link to="/profile">Profile</Link>
+          <Menu.Item icon={<FundOutlined />}>
+            <Link to="/cryptocurrencies">Cryptocurrencies</Link>
           </Menu.Item>
 
           <Menu.Item icon={<BulbOutlined />}>
             <Link to="/news">News</Link>
+          </Menu.Item>
+
+          <Menu.Item icon={<ReadOutlined />}>
+            <Link to="/about">About Us</Link>
           </Menu.Item>
         </Menu>
       )}

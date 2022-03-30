@@ -26,7 +26,7 @@ exports.openTrade = async (req, res, next) => {
     user.trades = trades;
 
     await user.save();
-    res.status(200).json({ success: true, data: unique_id });
+    res.status(200).json({ success: true, data: unique_id, user: user });
   } catch (error) {
     return next(
       new ErrorResponse("Server did not succeed at opening a position!", 500)
