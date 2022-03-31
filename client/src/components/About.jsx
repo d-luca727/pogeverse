@@ -7,21 +7,21 @@ const About = () => {
     {
       key: "1",
       icon: <i className="fas fa-chart-pie"></i>,
-      title: "High Performance",
+      title: "Crypto News",
       content:
         "cu nostro dissentias consectetuer mel. Ut admodum conceptam mei, cu eam tation fabulas abhorreant. His ex mandamus.",
     },
     {
       key: "2",
       icon: <i className="fas fa-desktop"></i>,
-      title: "Flat Design",
+      title: "Trade",
       content:
         "cu nostro dissentias consectetuer mel. Ut admodum conceptam mei, cu eam tation fabulas abhorreant. His ex mandamus.",
     },
     {
       key: "3",
       icon: <i className="fas fa-database"></i>,
-      title: "Simplified Workflow",
+      title: "Charts",
       content:
         "cu nostro dissentias consectetuer mel. Ut admodum conceptam mei, cu eam tation fabulas abhorreant. His ex mandamus.",
     },
@@ -35,16 +35,13 @@ const About = () => {
         </div>
         <div className="contentHolder">
           <p>
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Velit
-            necessitatibus officiis repudiandae est deserunt delectus dolorem
-            iure porro distinctio fuga, nostrum doloremque. Facilis porro in
-            laborum dolor amet ratione hic? Lorem ipsum dolor sit amet,
-            consectetur adipisicing elit. Magnam aut a porro, adipisci quidem
-            sint enim pariatur ducimus, saepe voluptatibus inventore commodi!
-            Quis, explicabo molestias libero tenetur temporibus perspiciatis
-            deserunt.
+            CryptoVerse is a website that provides a free Trading platform to
+            cryptocurrencies enthusiasts to practice and test their Trading
+            skills, helping them navigate the cryptoverse with all the newest
+            informations available!
           </p>
         </div>
+        <Title>Features</Title>
         <Row gutter={[16, 16]}>
           {items.map((item) => {
             return (
@@ -58,6 +55,8 @@ const About = () => {
             );
           })}
         </Row>
+        <Title>About Us</Title>
+        yada yada
       </div>
     </div>
   );
