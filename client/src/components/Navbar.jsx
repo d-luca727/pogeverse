@@ -63,6 +63,10 @@ const Navbar = () => {
             <Link to="/trade">Trade</Link>
           </Menu.Item>
 
+          <Menu.Item icon={<MoneyCollectOutlined />}>
+            <Link to="/leaderboard">Leaderboard</Link>
+          </Menu.Item>
+
           <Menu.Item icon={<FundOutlined />}>
             <Link to="/cryptocurrencies">Cryptocurrencies</Link>
           </Menu.Item>

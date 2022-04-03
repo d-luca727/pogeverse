@@ -11,6 +11,7 @@ import {
   CryptoDetails,
 } from "./components";
 import About from "./components/About";
+import LeaderBoard from "./components/LeaderBoard";
 import "./App.css";
 
 //trading
@@ -55,6 +56,12 @@ const App = () => {
               <Route exact path="/about" element={<About />}></Route>
 
               <Route exact path="/news" element={<News />}></Route>
+
+              <Route
+                exact
+                path="/leaderboard"
+                element={<LeaderBoard />}
+              ></Route>
               {/************ PRIVATE ROUTES  ****************/}
               {/* fix the flashing screen before showing the login page */}
               <Route exact path="/trade" element={<PrivateRoute />}>
