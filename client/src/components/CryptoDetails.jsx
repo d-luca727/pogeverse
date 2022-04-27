@@ -32,7 +32,7 @@ const CryptoDetails = () => {
   const cryptoDetails = data?.data?.coin;
 
   /*  const time = ['3h', '24h', '7d', '30d', '1y', '3m', '3y', '5y']; */
-
+  const volume = cryptoDetails["24hVolume"];
   const stats = [
     {
       title: "Price to USD",
@@ -42,7 +42,7 @@ const CryptoDetails = () => {
     { title: "Rank", value: cryptoDetails?.rank, icon: <NumberOutlined /> },
     {
       title: "24h Volume",
-      value: `$ ${cryptoDetails?.volume && millify(cryptoDetails?.volume)}`,
+      value: `$ ${volume && millify(volume)}`,
       icon: <ThunderboltOutlined />,
     },
     {
@@ -74,7 +74,7 @@ const CryptoDetails = () => {
       icon: <MoneyCollectOutlined />,
     },
     {
-      title: "Aprroved Supply",
+      title: "Approved Supply",
       value: cryptoDetails?.supply?.confirmed ? (
         <CheckOutlined />
       ) : (

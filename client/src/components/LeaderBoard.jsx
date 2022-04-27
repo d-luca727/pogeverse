@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { Typography, Col, Row } from "antd";
+import millify from "millify";
 
 import Loader from "./Loader";
 
@@ -50,7 +51,7 @@ const LeaderBoard = () => {
             <Text>username: {username}</Text>
             <Text>number of trades: {trades}</Text>
           </Col>
-          <Text className="stats">$ {money}</Text>
+          <Text className="stats">$ {money && millify(money)}</Text>
         </Col>
       ))}
     </>

@@ -1,5 +1,10 @@
-import React from "react";
-
+import {
+  GithubOutlined,
+  LinkedinOutlined,
+  StockOutlined,
+  ReadOutlined,
+  AreaChartOutlined,
+} from "@ant-design/icons";
 import { Row, Col, Typography } from "antd";
 import "../styles/About.css";
 const { Title, Text } = Typography;
@@ -7,29 +12,29 @@ const About = () => {
   const items = [
     {
       key: "1",
-      icon: <i className="fas fa-chart-pie"></i>,
+      icon: <ReadOutlined />,
       title: "Crypto News",
-      content: "Stay always tuned on the cryptoverse thanks to our news feed.",
+      content: "Stay always tuned on the cryptoverse thanks to our news feed",
     },
     {
       key: "2",
-      icon: <i className="fas fa-desktop"></i>,
+      icon: <StockOutlined />,
       title: "Trade",
-      content: "Register and start to practice trading for free!",
+      content: "Register and start trading for free!",
     },
     {
       key: "3",
-      icon: <i className="fas fa-database"></i>,
-      title: "up-to-date Live Trading Charts",
-      content:
-        "Thanks to trading view you can make the plans that best suit your trading strategy.",
+      icon: <AreaChartOutlined />,
+      title: "Up-To-Date Live Trading Charts",
+      content: "Live TradingView Charts.",
     },
   ];
   return (
     <div id="about" className="block aboutBlock">
       <div className="container-fluid">
+        <br />
         <div className="titleHolder">
-          <h2>About PogeVerse</h2>
+          <Title>About PogeVerse</Title>
           <p>The Best Free Crypto Trading Website</p>
         </div>
         <div className="contentHolder">
@@ -40,7 +45,8 @@ const About = () => {
             informations available!
           </p>
         </div>
-        <Title>Features</Title>
+
+        <Title style={{ textAlign: "center" }}>Features</Title>
         <Row gutter={[16, 16]}>
           {items.map((item) => {
             return (
@@ -54,9 +60,34 @@ const About = () => {
             );
           })}
         </Row>
-        <Title>About Us</Title>
-        This website is made entirely by Daniele Luca, reach me through github
-        or linkedin. --bottone github--bottone linkedin
+
+        <br></br>
+        <Title className={"titleHolder"}>About Us</Title>
+        <div style={{ textAlign: "center" }}>
+          This website is made entirely by Daniele Luca, reach me through github
+          or linkedin.
+          <br></br>
+          <br></br>
+          <br></br>
+          <Row gutter={[16, 16]}>
+            <Col span={6}></Col>
+            <Col span={6}>
+              <a
+                href="https://github.com/Proioxis4/crypto-trading-app"
+                target={"_blank"}
+              >
+                <GithubOutlined className="social-icons" />
+              </a>
+            </Col>
+            <Col span={6}>
+              {" "}
+              <a href="" target={"_blank"}>
+                <LinkedinOutlined className="social-icons" />
+              </a>
+            </Col>
+            <Col span={6}></Col>
+          </Row>
+        </div>
       </div>
     </div>
   );

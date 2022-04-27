@@ -125,7 +125,7 @@ const Profile = () => {
         <Col span={12}>
           <Statistic
             title="Total Amount of Money:"
-            value={`$ ${profile?.money}`}
+            value={`$ ${profile?.money.toFixed(2)}`}
           />
         </Col>
         <Col span={12}>
@@ -155,7 +155,7 @@ const Profile = () => {
                   <DollarCircleOutlined />
                 </Text>
                 <Text>
-                  {coin} / USD open at price: $ {open}
+                  {coin} / USD open at price: $ {open.toFixed(2)}
                 </Text>
                 <span> ------ </span>
                 <Text>invested amount: $ {amount}</Text>
@@ -166,12 +166,12 @@ const Profile = () => {
                 <Statistic
                   title={"profit/loss"}
                   value={`
-                    $${
+                    $${(
                       (cryptos?.find((crypto) => crypto.symbol == coin).price /
                         open) *
                         amount -
                       amount
-                    }`}
+                    ).toFixed(2)}`}
                 />
               </Text>
 
