@@ -41,7 +41,12 @@ EMAIL_USERNAME=<<>>
 EMAIL_PASSWORD=<<>>
 EMAIL_FROM=<<>>
 ```
-4. `npm install` and `npm run start` to run the server
+4. `cd client` and create another .env and replace those values
+ ```
+ REACT_APP_CRYPTO_API_KEY=<<rapid api key>>
+REACT_APP_NEWS_API_KEY=<<rapid api key>>
+ ```
+5. `npm install` and `npm run start` to run the server
     `cd client` , `npm install` and `npm start` to run the frontend
 
 # Dependencies
