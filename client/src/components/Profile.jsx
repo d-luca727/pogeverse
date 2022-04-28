@@ -9,7 +9,12 @@ import { useGetCryptosQuery } from "../services/crypto-api";
 
 import Loader from "./Loader";
 
-import { DollarCircleOutlined, FrownOutlined } from "@ant-design/icons";
+import {
+  ArrowUpOutlined,
+  DollarCircleOutlined,
+  FrownOutlined,
+  ArrowDownOutlined,
+} from "@ant-design/icons";
 
 import { useSelector, useDispatch } from "react-redux";
 import { atLogin } from "../app/profileReducer";
@@ -115,16 +120,19 @@ const Profile = () => {
       <Title level={2} className="heading">
         Profile
       </Title>
-      <Row>
+      <Row gutter={[20, 20]}>
         <Col span={12}>
           <Statistic title="Username:" value={profile.username} />
         </Col>
         <Col span={12}>
           <Statistic title="email:" value={profile.email} />
         </Col>
+        <br></br>
+
+        <br></br>
         <Col span={12}>
           <Statistic
-            title="Total Amount of Money:"
+            title="Amount of Money Available:"
             value={`$ ${profile?.money.toFixed(2)}`}
           />
         </Col>
@@ -148,22 +156,53 @@ const Profile = () => {
       )}
       {profile?.trades.map(({ coin, open, amount }, index) => (
         <>
-          <Row>
-            <Col span={14} key={index} className="coin-stats">
-              <Col className="coin-stats-name">
+          <Row gutter={[16, 16]} className="coin-stats">
+            <Col span={16} key={index}>
+              <Col className="coin-stats-name" style={{ fontSize: "150%" }}>
                 <Text>
                   <DollarCircleOutlined />
                 </Text>
                 <Text>
-                  {coin} / USD open at price: $ {open.toFixed(2)}
+                  <strong>{coin} / USD</strong>
                 </Text>
-                <span> ------ </span>
-                <Text>invested amount: $ {amount}</Text>
+              </Col>
+              <Col span={6}>
+                <Statistic
+                  style={{ paddingTop: 15 }}
+                  title={"open price"}
+                  value={`
+                  $${open.toFixed(2)}`}
+                />
+              </Col>
+              <Col span={4}>
+                <Statistic
+                  style={{ paddingTop: 15 }}
+                  title={"invested amount"}
+                  value={`
+                  $${amount.toFixed(2)}`}
+                />
               </Col>
             </Col>
+
             <Col>
-              <Text className={"positions-end"}>
+              <Text style={{ padding: 5 }}>
+                <div style={{ fontSize: "200%", textAlign: "center" }}>
+                  {(
+                    (cryptos?.find((crypto) => crypto.symbol == coin).price /
+                      open) *
+                      amount -
+                    amount
+                  ).toFixed(2) >= 0 ? (
+                    <ArrowUpOutlined style={{ color: "green" }} />
+                  ) : (
+                    <ArrowDownOutlined style={{ color: "red" }} />
+                  )}
+                </div>
                 <Statistic
+                  style={{
+                    textAlign: "center",
+                    paddingBottom: 10,
+                  }}
                   title={"profit/loss"}
                   value={`
                     $${(
@@ -175,7 +214,11 @@ const Profile = () => {
                 />
               </Text>
 
-              <Button onClick={() => closePosition(index)}>
+              <Button
+                style={{ textAlign: "center" }}
+                danger
+                onClick={() => closePosition(index)}
+              >
                 Close Position
               </Button>
             </Col>

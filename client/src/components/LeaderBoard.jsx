@@ -37,7 +37,7 @@ const LeaderBoard = () => {
 
   if (users.length === 0) return <Loader />;
   return (
-    <>
+    <div>
       <Title className="coin-heading-container" level={2}>
         Global PogeVerse Leaderboard
       </Title>
@@ -48,13 +48,14 @@ const LeaderBoard = () => {
         <Col key={index} className="coin-stats">
           <Col className="coin-stats-name">
             <Text>{index + 1}.</Text>
-            <Text>username: {username}</Text>
-            <Text>number of trades: {trades}</Text>
+            <Text>
+              <strong>{username}</strong>
+            </Text>
           </Col>
           <Text className="stats">$ {money && millify(money)}</Text>
         </Col>
       ))}
-    </>
+    </div>
   );
 };
 
