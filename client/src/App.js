@@ -2,6 +2,8 @@ import React from "react";
 import { Routes as Switch, Route, Link } from "react-router-dom";
 import { Layout, Typography, Space } from "antd";
 
+//todo: fix footer navbar that redirects to nothing (/home) and add your linkedin profile
+
 import {
   Navbar,
   Homepage,
