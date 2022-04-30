@@ -27,7 +27,7 @@ const LeaderBoard = () => {
       try {
         const { data } = await axios.get("/api/leaderboard", config);
 
-        setUsers(data.data.sort((a, b) => (a.moeny < b.money ? -1 : 1)));
+        setUsers(data.data.sort((a, b) => (a.money > b.money ? -1 : 1)));
       } catch (error) {
         setError("Could not retrieve server data. ");
       }
