@@ -1,5 +1,5 @@
 const User = require("../models/User");
-const ErrorResponse = require("../utils/ErrorRes");
+const ErrorResponse = require("../utils/errorRes");
 
 const { v4: uuidv4 } = require("uuid");
 //open trade

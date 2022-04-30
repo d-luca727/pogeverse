@@ -1,6 +1,6 @@
 const { use } = require("express/lib/router");
 const User = require("../models/User");
-const ErrorResponse = require("../utils/ErrorRes");
+const ErrorResponse = require("../utils/errorRes");
 
 //open trade
 exports.leaderboard = async (req, res, next) => {

@@ -1,6 +1,6 @@
 const crypto = require("crypto");
 const User = require("../models/User");
-const ErrorResponse = require("../utils/ErrorRes");
+const ErrorResponse = require("../utils/errorRes");
 const sendEmail = require("../utils/sendEmail");
 
 //register
