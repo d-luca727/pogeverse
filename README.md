@@ -13,6 +13,7 @@ Pogeverse is a trading simulatation website where the user can put in practice h
 
 ## to-do:
 
+-  rewrite the backend in Rust Actix Web
 -  Derivatives (Futures, Options, Forwards etc..).
 -  User Comments on the current market trends .
 -  general UI and trading improvements.
